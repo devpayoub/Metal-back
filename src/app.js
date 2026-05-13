@@ -3,12 +3,9 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import rateLimit from "express-rate-limit";
-import swaggerUi from "swagger-ui-express";
-
 import { env } from "./config/env.js";
 import apiRouter from "./routes/index.js";
 import { notFound, errorHandler } from "./middleware/error.middleware.js";
-import { swaggerSpec } from "../docs/swagger.js";
 
 const app = express();
 
@@ -159,16 +156,13 @@ app.get("/", (_req, res) => {
     <h1>MIS Metal Construction</h1>
     <p>Backend API is running and ready to accept requests.</p>
     <div class="links">
-      <a class="primary" href="/api/docs">Swagger Docs</a>
-      <a class="secondary" href="/api/health">Health Check</a>
+      <a class="primary" href="/api/health">Health Check</a>
     </div>
   </div>
 </body>
 </html>`);
 });
 
-app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.get("/api/docs.json", (_req, res) => res.json(swaggerSpec));
 
 app.use("/api", apiRouter);
 
